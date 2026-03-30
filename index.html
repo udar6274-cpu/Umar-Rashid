@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Result Portal</title>
+
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
+    margin: 0;
+    color: #333;
+}
+
+.container {
+    max-width: 500px;
+    margin: 80px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 10px;
+    width: 80%;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #45a049;
+}
+
+.result-box {
+    margin-top: 20px;
+    text-align: left;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f5f5f5;
+    display: none;
+}
+
+.pass { color: green; }
+.fail { color: red; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎓 Result Portal</h1>
+    <p>Enter your Roll Number</p>
+
+    <input type="number" id="roll" placeholder="Enter Roll Number (1-30)">
+    <br>
+    <button onclick="showResult()">View Result</button>
+
+    <div class="result-box" id="resultBox"></div>
+</div>
+
+<script>
+const students = [
+"Ayaan Khan","Ali Raza","Usman Malik","Hamza Shah","Zain Ahmad",
+"Saad Mir","Bilal Dar","Omar Lone","Faizan Sheikh","Imran Bhat",
+"Arslan Qureshi","Sameer Wani","Yasir Sofi","Adil Hussain","Shahid Dar",
+"Rehan Malik","Noman Khan","Junaid Mir","Fahad Lone","Rizwan Ahmad",
+"Talha Shah","Asif Bhat","Shayan Dar","Hassan Mir","Waqas Khan",
+"Adnan Lone","Farhan Sheikh","Ubaid Ahmad","Haroon Dar","Yusuf Malik"
+];
+
+function getGrade(p) {
+    if (p >= 80) return "A";
+    if (p >= 60) return "B";
+    if (p >= 40) return "C";
+    return "F";
+}
+
+function showResult() {
+    let roll = document.getElementById("roll").value;
+    let box = document.getElementById("resultBox");
+
+    if (roll < 1 || roll > 30) {
+        alert("Invalid Roll Number");
+        return;
+    }
+
+    let marks = roll;
+    let percentage = ((marks/30)*100).toFixed(1);
+    let grade = getGrade(percentage);
+    let status = marks >= 15 ? "Pass" : "Fail";
+
+    box.style.display = "block";
+    box.innerHTML = `
+        <h3>Result Details</h3>
+        <p><strong>Name:</strong> ${students[roll-1]}</p>
+        <p><strong>Roll No:</strong> ${roll}</p>
+        <p><strong>Marks:</strong> ${marks}/30</p>
+        <p><strong>Percentage:</strong> ${percentage}%</p>
+        <p><strong>Grade:</strong> ${grade}</p>
+        <p><strong>Status:</strong> 
+            <span class="${status==='Pass'?'pass':'fail'}">${status}</span>
+        </p>
+    `;
+}
+</script>
+
+</body>
+</html>
